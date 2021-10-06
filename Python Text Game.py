@@ -48,25 +48,29 @@ def build_character(name, character_select):
         print("You entered an invalid class. Restarting character creation.")
         character_creation()
 
-def new_monster(name, level):
-    monster = Monster(name, level)
-    return monster
+def game_loop(character, monster):
+    continue_game = True
+    while continue_game:
+         player_action = input("How will you handle the {monster_name}? {action_list} or X to exit: ".format(monster_name=monster.name, action_list=character.action_options.keys()))
+         if player_action != "X":
+            character.attack(player_action)
+            damage_dealt = character.action_options.get(player_action)
+            monster.hp -= damage_dealt
+            if monster.hp <= 0:
+                print("The {monster_name} has been slain!".format(monster_name=monster.name))
+                continue_game = False
+            else:
+                print("The {monster_name} has {hp_remaining} hp remaining".format(monster_name=monster.name, hp_remaining=monster.hp))
+         if player_action == "X":
+            continue_game = False
+
+
+
+
+
 
 character = character_creation()
-monster = new_monster("Aardvark", 1)
+monster = Monster("Aardvark", 1)
+monster2 = Monster("TacoCat", 3)
+game_loop(character, monster2)
 
-continue_game = True
-while continue_game:
-    player_action = input("How will you handle the {monster_name}? {action_list} or X to exit: ".format(monster_name=monster.name, action_list=character.action_options.keys()))
-    if player_action != "X":
-        character.attack(player_action)
-        damage_dealt = character.action_options.get(player_action)
-        monster.hp -= damage_dealt
-        if monster.hp <= 0:
-            print("The {monster_name} has been slain!".format(monster_name=monster.name))
-            continue_game = False
-        else:
-            print("The {monster_name} has {hp_remaining} hp remaining".format(monster_name=monster.name, hp_remaining=monster.hp))
-
-    if player_action == "X":
-        continue_game = False
