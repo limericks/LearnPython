@@ -48,6 +48,17 @@ def build_character(name, character_select):
         print("You entered an invalid class. Restarting character creation.")
         character_creation()
 
+def difficulty_selection():
+    difficulty = input("Please select difficulty -  (E)asy or (H)ard: ")
+    difficulty_cut = difficulty[0].capitalize()
+    if difficulty_cut == "E":
+        return "Easy"
+    elif difficulty_cut == "H":
+        return "Hard"
+    else:
+        print("You entered an invalid option, please select a difficulty.")
+        difficulty_selection()
+
 def game_loop(character, monster):
     continue_game = True
     while continue_game:
@@ -70,7 +81,12 @@ def game_loop(character, monster):
 
 
 character = character_creation()
-monster = Monster("Aardvark", 1)
-monster2 = Monster("TacoCat", 3)
-game_loop(character, monster2)
+difficulty_setting = difficulty_selection()
+
+if difficulty_setting == "Easy":
+    monster = Monster("Aardvark", 1)
+elif difficulty_setting == "Hard":
+    monster = Monster("TacoCat", 3)
+
+game_loop(character, monster)
 
